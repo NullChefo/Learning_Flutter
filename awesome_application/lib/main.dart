@@ -16,37 +16,48 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Awesome app"),
       ),
-      body: Container(
-        color: Colors.greenAccent,
-        height: 500,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      body: Center(
+        child: Container(
+          color: Colors.greenAccent,
+          height: 100,
+          width: 100,
+        ),
+      ),
+      drawer: Drawer(
+        //  key: key,
+        child: ListView(
+          padding: const EdgeInsets.all(0),
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(10), //Paddin
-              width: 100,
-              height: 100,
-              color: Colors.red,
-              alignment: Alignment.center,
+            UserAccountsDrawerHeader(
+              accountName: Text("Name"),
+              accountEmail: Text("@gmail.com"),
+              currentAccountPicture: CircleAvatar(
+                  backgroundColor:
+                      Colors.yellowAccent), // can change with Image.network()
             ),
-            Container(
-              padding: const EdgeInsets.all(10), //Paddin
-              width: 100,
-              height: 100,
-              color: Colors.yellow,
-              alignment: Alignment.center,
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text("First Name"),
+              subtitle: Text("Last Name"),
+              trailing: Icon(Icons.person_add),
             ),
-            Container(
-              padding: const EdgeInsets.all(10), //Paddin
-              width: 100,
-              height: 100,
-              color: Colors.green,
-              alignment: Alignment.center,
-            ),
+            ListTile(
+              leading: Icon(Icons.email),
+              title: Text("Email"),
+              subtitle: Text("@gmail.com"),
+              trailing: Icon(Icons.email_sharp),
+            )
           ],
         ),
       ),
+
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.edit),
+        //backgroundColor: Colors.teal,
+
+        onPressed: () {},
+      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
