@@ -56,15 +56,17 @@ class _HomePageState extends State<HomePage> {
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return ListTile(
-                    title: Text(data[index]["id"].toString().toUpperCase()),
-                    subtitle: Text(
-                      " ${data[index]["symbol"].toString().toUpperCase()}",
-                    ),
-                    leading: Container(
-                        child: Image.network(data[index]["image"]["thumb"])),
-                    trailing: Text(
-                      " ${data[index]["market_data"]["current_price"]["usd"].toString().toUpperCase()} USD",
-                    ));
+                  title: Text(data[index]["id"].toString().toUpperCase()),
+                  subtitle: Text(
+                    " ${data[index]["symbol"].toString().toUpperCase()}",
+                  ),
+                  leading: Container(
+                      child: Image.network(data[index]["image"]["thumb"])),
+                  trailing: Text(
+                    " ${data[index]["market_data"]["current_price"]["usd"].toString().toUpperCase()} USD",
+                  ),
+                  onTap: () {},
+                );
               },
               itemCount: data.length,
             )
