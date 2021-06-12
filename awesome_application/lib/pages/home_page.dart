@@ -1,35 +1,34 @@
-import 'package:awesome_application/card.dart';
-import 'package:awesome_application/drawer.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:awesome_app/drawer.dart';
+import 'package:awesome_app/pages/login_page.dart';
+import 'package:awesome_app/utils/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 class HomePage extends StatefulWidget {
+  static const String routeName = "/home";
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   // var myText = "Change My Name";
   // TextEditingController _nameController = TextEditingController();
 
-  var url = Uri.parse("https://api.coingecko.com/api/v3/coins/");
-
-  var data = [];
-
-  void fetchData() async {
-    http.Response response = await http.get(url);
-
-    print(response.body);
-
-// #TODO 1.37.00
-    data = JsonDecoder(response.body);
-  }
+  var url = "https://api.coingecko.com/api/v3/coins/";
+  var data;
 
   @override
   void initState() {
     super.initState();
     fetchData();
+  }
+
+  fetchData() async {
+    var res = await http.get(url);
+    data = jsonDecode(res.body);
+    setState(() {});
   }
 
   @override
@@ -40,37 +39,46 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text("Awesome app"),
+        title: Text("Coin Price Tracker"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              Constants.prefs.setBool("loggedIn", false);
+              Navigator.pushReplacementNamed(context, LoginPage.routeName);
+            },
+          )
+        ],
       ),
-
       body: data != null
-          ? Container()
+          ? ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                    title: Text(data[index]["id"].toString().toUpperCase()),
+                    subtitle: Text(
+                      " ${data[index]["symbol"].toString().toUpperCase()}",
+                    ),
+                    leading: Container(
+                        child: Image.network(data[index]["image"]["thumb"])),
+                    trailing: Text(
+                      " ${data[index]["market_data"]["current_price"]["usd"].toString().toUpperCase()} USD",
+                    ));
+              },
+              itemCount: data.length,
+            )
           : Center(
               child: CircularProgressIndicator(),
             ),
-
-      // body: Center(
-      //      child: Padding(
-      //    padding: EdgeInsets.all(16.0),
-      //   child: SingleChildScrollView(
-      //      child: myCard(myText: myText, nameController: _nameController),
-      //     ),
-      //      ),
-      // ),
-
-      drawer: MyDraw(),
-
+      drawer: MyDrawer(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.send),
-        //backgroundColor: Colors.teal,
-
         onPressed: () {
-          //myText = _nameController.text;
+          // myText = _nameController.text;
           // setState(() {});
         },
+        child: Icon(Icons.send),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

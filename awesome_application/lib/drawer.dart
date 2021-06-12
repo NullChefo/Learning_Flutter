@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
 
-class MyDraw extends StatelessWidget {
-  const MyDraw({Key? key}) : super(key: key);
-
+class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      //  key: key,
       child: ListView(
         padding: const EdgeInsets.all(0),
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("Name"),
-            accountEmail: Text("@gmail.com"),
-            currentAccountPicture: CircleAvatar(
-                backgroundColor:
-                    Colors.yellowAccent), // can change with Image.network()
-          ),
+              accountName: Text("Name"),
+              accountEmail: Text(" @gmail.com"),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "https://images.unsplash.com/photo-1497551060073-4c5ab6435f12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"),
+              )),
           ListTile(
             leading: Icon(Icons.person),
-            title: Text("First Name"),
-            subtitle: Text("Last Name"),
-            trailing: Icon(Icons.person_add),
+            title: Text("Name "),
+            subtitle: Text("Developer"),
+            trailing: Icon(Icons.edit),
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.email),
             title: Text("Email"),
-            subtitle: Text("@gmail.com"),
-            trailing: Icon(Icons.email_sharp),
+            subtitle: Text(" @gmail.com"),
+            trailing: Icon(Icons.edit),
           )
         ],
       ),
